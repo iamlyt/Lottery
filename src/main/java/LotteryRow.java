@@ -16,20 +16,27 @@ public class LotteryRow {
     }
 
     // randomizes new numbers for the lottery row
+    // same number can only appear once in a lottery row
     public void randomizeNumbers() {
         // Initialize the list for numbers
         this.numbers = new ArrayList<>();
         // Implement the random number generation here
         Random random = new Random();
-        for (int i = 0; i < 7; i++) {
-            int randNum = random.nextInt(40) + 1;
-            if (containsNumber(randNum)) {
-                continue;
+        // generate 7 lottery numbers
+        // if the number already exist in the list,
+        // skip it and add another one
+        // use method containsNumber
+        while (true) {
+            if (numbers.size() < 7) {
+                int lotNum = random.nextInt(40) + 1;
+                if (!containsNumber(lotNum)) {
+                    // add to the list of numbers
+                    this.numbers.add(lotNum);
+                }
+            } else if (numbers.size() == 7) {
+                break;
             }
-            this.numbers.add(randNum);
         }
-        // the method containsNumber is probably useful
-
     }
 
     // tells whether the given number is included in the drawn numbers
@@ -42,5 +49,6 @@ public class LotteryRow {
         }
         return false;
     }
+
 }
 
